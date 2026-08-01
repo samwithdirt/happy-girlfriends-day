@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Sanelisiwe &amp; Mpho — For My Muntfu Wami</title>
+<meta name="description" content="A little universe I built just for you.">
+<meta name="theme-color" content="#1B1023">
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="dusk">
+
+  <!-- ================= LOADING SCREEN ================= -->
+  <div id="loading-screen" aria-hidden="true">
+    <div class="loader-bond">
+      <span class="atom atom-m">M</span>
+      <span class="bond-line"></span>
+      <span class="atom atom-s">S</span>
+    </div>
+    <p class="loader-text">weaving our little universe<span class="dots"><span>.</span><span>.</span><span>.</span></span></p>
+  </div>
+
+  <!-- ================= LOCK SCREEN ================= -->
+  <section id="lock-screen" role="dialog" aria-label="Enter our date to unlock">
+    <div class="lock-card glass">
+      <div class="lock-heart" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-10-9.3C.5 8.6 2.2 5 6 5c2.1 0 3.6 1.2 4.5 2.5C11.4 6.2 12.9 5 15 5c3.8 0 5.5 3.6 4 6.7C19.5 16.4 12 21 12 21z"/></svg>
+      </div>
+      <h1>You need the password, baby</h1>
+      <p class="lock-hint">Hint: it's the day it became official for us 💛</p>
+      <form id="lock-form" autocomplete="off">
+        <input type="text" id="lock-input" placeholder="dd / mm / yyyy" aria-label="Enter password" inputmode="text">
+        <button type="submit" aria-label="Unlock">Unlock our story</button>
+      </form>
+      <p id="lock-error" aria-live="polite"></p>
+      <button id="lock-forgot" type="button">forgot? here's a clue 👀</button>
+    </div>
+  </section>
+
+  <!-- ================= AMBIENT / UTILITY LAYERS ================= -->
+  <canvas id="particles-canvas" aria-hidden="true"></canvas>
+  <div id="cursor-glow" aria-hidden="true"></div>
+  <div id="floating-hearts" aria-hidden="true"></div>
+  <div id="scroll-progress"><div id="scroll-progress-bar"></div></div>
+  <div id="achievement-toast-wrap" aria-live="polite"></div>
+
+  <div id="site-root" hidden>
+
+  <!-- ================= NAV ================= -->
+  <nav class="site-nav glass">
+    <a href="#hero" class="brand">M <span class="bond-dot">⋯⋯⋯</span> S</a>
+    <div class="nav-controls">
+      <button id="mute-toggle" class="icon-btn" aria-label="Toggle sound">🔊</button>
+      <button id="theme-toggle" class="icon-btn" aria-label="Toggle theme">🌙</button>
+    </div>
+  </nav>
+
+  <!-- ================= 1. HERO ================= -->
+  <header id="hero" class="section-hero">
+    <div class="hero-parallax" data-parallax>
+      <div class="hero-glow g1"></div>
+      <div class="hero-glow g2"></div>
+    </div>
+    <div class="hero-content">
+      <p class="eyebrow">sawubona, muntfu wami</p>
+      <h1 class="hero-title" id="hero-title" title="click me a few times 👀">For Sanelisiwe</h1>
+      <p class="hero-sub" id="typing-target"></p>
+      <p class="hero-since">Ours since <time datetime="2026-03-26">26 March 2026</time></p>
+    </div>
+    <button class="scroll-indicator" id="scroll-indicator" aria-label="Scroll down">
+      <span></span><small>scroll, love</small>
+    </button>
+  </header>
+
+  <div class="bond-divider" data-reveal><span>M</span><i>⋯⋯⋯⋯⋯</i><span>S</span></div>
+
+  <!-- ================= 2. OUR STORY ================= -->
+  <section id="story" class="section">
+    <h2 class="section-title" data-reveal>ngiyakutsandza — a small timeline of us</h2>
+    <p class="section-lede" data-reveal>from the actual proposal to right now. real chat, just the good parts.</p>
+    <div class="timeline" id="timeline"></div>
+  </section>
+
+  <!-- ================= 3. MEMORY CARDS ================= -->
+  <section id="memories" class="section alt-bg">
+    <h2 class="section-title" data-reveal>memory cards</h2>
+    <p class="section-lede" data-reveal>tap one open.</p>
+    <div class="memory-grid" id="memory-grid"></div>
+  </section>
+
+  <!-- ================= 4. REASONS ================= -->
+  <section id="reasons" class="section">
+    <h2 class="section-title" data-reveal>30 reasons (of many more)</h2>
+    <p class="section-lede" data-reveal>i could keep going forever, honestly.</p>
+    <div class="reasons-grid" id="reasons-grid"></div>
+  </section>
+
+  <!-- ================= 5. FAVORITE MOMENTS ================= -->
+  <section id="favorites" class="section alt-bg">
+    <h2 class="section-title" data-reveal>favorite moments, straight from our chat</h2>
+    <p class="section-lede" data-reveal>screenshots i'll never delete.</p>
+    <div class="fav-grid" id="fav-grid"></div>
+  </section>
+
+  <!-- ================= 6. LIVE CHAT REPLAY ================= -->
+  <section id="chat-replay" class="section">
+    <h2 class="section-title" data-reveal>replay: two nights, two arguments</h2>
+    <p class="section-lede" data-reveal>two nights, two arguments about who loves who more (one of them got real nerdy).</p>
+    <div class="phone-shell glass" data-reveal>
+      <div class="phone-header">
+        <div class="phone-avatar">S</div>
+        <div>
+          <p class="phone-name">my sweet angel .❤️</p>
+          <p class="phone-status" id="chat-status">tap play</p>
+        </div>
+      </div>
+      <div class="phone-body" id="chat-body"></div>
+      <div class="phone-controls">
+        <button id="chat-restart" class="icon-btn" aria-label="Restart">⟲</button>
+        <button id="chat-play" class="icon-btn primary" aria-label="Play">▶</button>
+        <select id="chat-speed" aria-label="Replay speed">
+          <option value="1.6">0.6×</option>
+          <option value="1" selected>1×</option>
+          <option value="0.5">2×</option>
+        </select>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 7. LOVE LETTERS ================= -->
+  <section id="letters" class="section alt-bg">
+    <h2 class="section-title" data-reveal>love letters</h2>
+    <p class="section-lede" data-reveal>break the seal.</p>
+    <div class="letters-grid" id="letters-grid"></div>
+  </section>
+
+  <!-- ================= 8. FLIPBOOK ================= -->
+  <section id="flipbook-section" class="section">
+    <h2 class="section-title" data-reveal>flip through our book</h2>
+    <p class="section-lede" data-reveal>drag a corner, or use the arrows.</p>
+    <div class="flipbook-wrap" data-reveal>
+      <div class="flipbook" id="flipbook"></div>
+      <div class="flipbook-controls">
+        <button id="fb-prev" class="icon-btn" aria-label="Previous page">‹</button>
+        <span id="fb-page-num">1 / 6</span>
+        <button id="fb-next" class="icon-btn" aria-label="Next page">›</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 9. QUOTES CAROUSEL ================= -->
+  <section id="quotes" class="section alt-bg">
+    <h2 class="section-title" data-reveal>little truths</h2>
+    <div class="quote-carousel glass" data-reveal>
+      <button class="quote-arrow" id="quote-prev" aria-label="Previous quote">‹</button>
+      <blockquote id="quote-text"></blockquote>
+      <button class="quote-arrow" id="quote-next" aria-label="Next quote">›</button>
+    </div>
+    <div class="quote-dots" id="quote-dots"></div>
+  </section>
+
+  <!-- ================= 10. CONSTELLATION LOVE SKY ================= -->
+  <section id="sky" class="section dark-fixed">
+    <h2 class="section-title light" data-reveal>our sky</h2>
+    <p class="section-lede light" data-reveal>find the shape hiding in the stars. click one.</p>
+    <canvas id="sky-canvas"></canvas>
+    <p class="sky-hint" id="sky-hint">tap a star ✨</p>
+  </section>
+
+  <!-- ================= 11. MEMORY MAP ================= -->
+  <section id="memory-map" class="section">
+    <h2 class="section-title" data-reveal>the road so far</h2>
+    <p class="section-lede" data-reveal>not a real map — just the path of us.</p>
+    <div class="map-wrap glass" data-reveal>
+      <svg id="map-path-svg" viewBox="0 0 800 320" preserveAspectRatio="xMidYMid meet"></svg>
+      <div id="map-markers"></div>
+    </div>
+  </section>
+
+  <!-- ================= 12. FLOWER GARDEN ================= -->
+  <section id="garden" class="section alt-bg">
+    <h2 class="section-title" data-reveal>your garden</h2>
+    <p class="section-lede" data-reveal>scroll to let it bloom. click a flower.</p>
+    <div class="garden-wrap" id="garden-wrap">
+      <div class="garden-sky"></div>
+      <div class="garden-ground" id="garden-ground"></div>
+    </div>
+  </section>
+
+  <!-- ================= 13. FUTURE TOGETHER ================= -->
+  <section id="future" class="section">
+    <h2 class="section-title" data-reveal>everything still coming</h2>
+    <p class="section-lede" data-reveal>the bucket list.</p>
+    <div class="future-grid" id="future-grid"></div>
+  </section>
+
+  <!-- ================= 14. GALLERY ================= -->
+  <section id="gallery" class="section alt-bg">
+    <h2 class="section-title" data-reveal>five frames</h2>
+    <p class="section-lede" data-reveal>drop your real photos in <code>assets/images/</code> — these are placeholders waiting for you.</p>
+    <div class="masonry" id="gallery-grid"></div>
+  </section>
+
+  <!-- ================= 15. STATS ================= -->
+  <section id="stats" class="section">
+    <h2 class="section-title" data-reveal>us, in numbers</h2>
+    <div class="stats-grid" id="stats-grid"></div>
+  </section>
+
+  <!-- ================= 16. COUNTDOWN ================= -->
+  <section id="countdown" class="section alt-bg">
+    <h2 class="section-title" data-reveal>next monthiversary</h2>
+    <div class="countdown-grid glass" id="countdown-grid" data-reveal></div>
+    <p class="countdown-sub">one down, eleven to go. one year on <time datetime="2027-03-26">26 March 2027</time> 👀</p>
+  </section>
+
+  <!-- ================= 17. FINAL SURPRISE ================= -->
+  <section id="finale" class="section dark-fixed finale-section">
+    <canvas id="finale-canvas"></canvas>
+    <div class="finale-content">
+      <p class="eyebrow light" data-reveal>if you're still reading, muntfu wami</p>
+      <h2 class="finale-title" data-reveal>Happy Girlfriend's Day</h2>
+      <p class="finale-text" data-reveal>
+        thank you for reading a whole website i built you again, no shame. thank you for every "hi honey,"
+        every goodnight text, every chemistry pun you let me get away with. we said "one down eleven to go"
+        and i meant it as a promise, not a joke. we don't do the blame game, we just fix it, and that's why
+        i'm not going anywhere. worser feelings and all, still choosing you.
+      </p>
+      <p class="finale-signature" data-reveal>— your minion, forever. 🖤</p>
+      <div class="finale-hearts" aria-hidden="true"></div>
+    </div>
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="site-footer">
+    <p>built by hand, just for <span id="footer-heart-trigger" title="click me">Sanelisiwe 🤍</span></p>
+    <p class="footer-tiny">secrets found: <span id="egg-counter">0</span> / 30</p>
+  </footer>
+
+  </div><!-- /site-root -->
+
+  <!-- ================= BACK TO TOP ================= -->
+  <button id="back-to-top" aria-label="Back to top">↑</button>
+  <button id="music-player-reopen" aria-label="Show music player">♪</button>
+
+  <!-- ================= MUSIC PLAYER (floating) ================= -->
+  <div id="music-player" class="glass">
+    <p class="music-title">our song — best part, daniel caesar</p>
+    <iframe id="spotify-embed" title="Best Part - Daniel Caesar" style="border-radius:12px" src="https://open.spotify.com/embed/track/1RMJOxR6GRPsBHL8qeC2ux?utm_source=generator&theme=0" width="100%" height="152" frameborder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    <button id="music-collapse" class="icon-btn" aria-label="Collapse player">✕</button>
+  </div>
+
+  <!-- ================= SECRET MESSAGE MODAL ================= -->
+  <div id="secret-modal" class="modal-overlay" hidden>
+    <div class="modal-card glass">
+      <button class="modal-close" id="secret-close" aria-label="Close">✕</button>
+      <p class="eyebrow">🔓 fully unlocked</p>
+      <h3>the actual secret</h3>
+      <img src="assets/images/doodle-heart-mf.jpg" alt="a heart doodle with our initials, drawn on a video call" class="modal-img">
+      <p id="secret-body"></p>
+    </div>
+  </div>
+
+  <!-- ================= LIGHTBOX ================= -->
+  <div id="lightbox" class="modal-overlay" hidden>
+    <button class="modal-close" id="lightbox-close" aria-label="Close">✕</button>
+    <button class="lightbox-nav prev" id="lightbox-prev" aria-label="Previous image">‹</button>
+    <div class="lightbox-frame" id="lightbox-frame"></div>
+    <button class="lightbox-nav next" id="lightbox-next" aria-label="Next image">›</button>
+    <p id="lightbox-caption"></p>
+  </div>
+
+  <!-- ================= MAP STORY POPUP ================= -->
+  <div id="map-popup" class="modal-overlay" hidden>
+    <div class="modal-card glass">
+      <button class="modal-close" id="map-popup-close" aria-label="Close">✕</button>
+      <h3 id="map-popup-title"></h3>
+      <p id="map-popup-body"></p>
+    </div>
+  </div>
+
+  <!-- ================= FUTURE CARD REVEAL (marriage joke) ================= -->
+  <div id="future-reveal-modal" class="modal-overlay" hidden>
+    <div class="modal-card glass">
+      <button class="modal-close" id="future-reveal-close" aria-label="Close">✕</button>
+      <img src="assets/images/marriage-announcement.jpg" alt="a joke marriage announcement poster made in school uniform" class="modal-img">
+      <p>a friend joked about it first. we ran with it a little too far, honestly.</p>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
